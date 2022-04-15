@@ -8,5 +8,6 @@
 </head>
 <body>
 	<h1>Index page</h1>
+	<!-- properties test -->
 </body>
 </html>
