@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.keem.boot2.notice.talk.TalkMapper">
+	<insert id="setAdd" parameterType="NoticeVO">
+		INSERT INTO TALK(NUM,TITLE,WRITER,CONTENTS,HIT,REGDATE)
+		VALUES(TALK_SEQ.NEXTVAL,#{title},#{writer},#{contents},0,sysdate)
+	</insert>
+	
+	<!-- list -->
+	<select id="getList" resultType="TalkVO">
+		SELECT* FROM 
+		(SELECT ROWNUM R,T.* FROM 
+		(SELECT * FROM TALK ORDER BY NUM DESC) T 
+		)
+		WHERE R BETWEEN 1 AND 10
+	</select>
+	
+	<!-- detail -->	
+	<select id="getDetail" parameterType="NoticeVO" resultType="TalkVO">
+		SELECT * FROM TALK WHERE NUM=#{num}
+	</select>
+	
+	<!-- update -->
+	<!-- title,contents만 수정 가능 -->
+	<update id="setUpdate" parameterType="NoticeVO">
+		UPDATE TALK SET TITLE=#{title},CONTENTS=#{contents}
+		WHERE NUM=#{num}
+	</update>
+	
+	<!-- delete -->
+	<delete id="setDelete" parameterType="NoticeVO">
+		DELETE TALK WHERE NUM=#{num}
+	</delete>
+	
+</mapper>
